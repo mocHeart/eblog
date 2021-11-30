@@ -33,9 +33,9 @@
                             <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
                         </div>
                         <span class="fly-list-nums">
-                <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
-                <i class="iconfont" title="人气">&#xe60b;</i> 99999
-              </span>
+                            <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
+                            <i class="iconfont" title="人气">&#xe60b;</i> 99999
+                        </span>
                     </div>
                     <div class="detail-about">
                         <a class="fly-avatar" href="../user/home.html">
@@ -60,11 +60,11 @@
                         </p>
                         <p>更新日志：</p>
                         <pre>
-    # v3.0 2017-11-30
-    * 采用 layui 2.2.3 作为 UI 支撑
-    * 全面同步最新的 Fly 社区风格，各种细节得到大幅优化
-    * 更友好的响应式适配能力
-    </pre>
+                            # v3.0 2017-11-30
+                            * 采用 layui 2.2.3 作为 UI 支撑
+                            * 全面同步最新的 Fly 社区风格，各种细节得到大幅优化
+                            * 更友好的响应式适配能力
+                        </pre>
 
                         下载<hr>
                         <p>
@@ -74,7 +74,7 @@
                         </p>
                         封面<hr>
                         <p>
-                            <img src="../../res/images/fly.jpg" alt="Fly社区">
+                            <img src="/eblog/res/images/fly.jpg" alt="Fly社区">
                         </p>
                     </div>
                 </div>

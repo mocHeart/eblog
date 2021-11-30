@@ -9,8 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="fly,layui,前端社区">
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
-    <link rel="stylesheet" href="../eblog/res/layui/css/layui.css">
-    <link rel="stylesheet" href="../eblog/res/css/global.css">
+    <link rel="stylesheet" href="/eblog/res/layui/css/layui.css">
+    <link rel="stylesheet" href="/eblog/res/css/global.css">
 </head>
 <body>
 
@@ -23,19 +23,19 @@
 <#-- 尾部 -->
 <#include "/inc/footer.ftl" />
 
-<script src="../eblog/res/layui/layui.js"></script>
+<script src="/eblog/res/layui/layui.js"></script>
 <script>
     layui.cache.page = '';
     layui.cache.user = {
         username: '游客'
         ,uid: -1
-        ,avatar: '../eblog/res/images/avatar/00.jpg'
+        ,avatar: '/eblog/res/images/avatar/00.jpg'
         ,experience: 83
         ,sex: '男'
     };
     layui.config({
         version: "3.0.0"
-        ,base: '../eblog/res/mods/' //这里实际使用时，建议改成绝对路径
+        ,base: '/eblog/res/mods/' //这里实际使用时，建议改成绝对路径
     }).extend({
         fly: 'index'
     }).use('fly');

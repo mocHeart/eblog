@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /eblog
+
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.55.0.87:3306/eblog?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: swwljy
+
+  # 模板配置
+  freemarker:
+    settings:
+      classic_compatible: true   # 处理空值
+      datetime_format: yyyy-MM-dd HH:mm
+      number_format: 0.##
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml

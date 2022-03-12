@@ -1,5 +1,7 @@
 package com.moc.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.moc.entity.Post;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PostService extends IService<Post> {
 
+    IPage paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String created);
 }

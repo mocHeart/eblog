@@ -28,6 +28,10 @@ public class ContextStartUp implements ApplicationRunner, ServletContextAware {
      */
     ServletContext servletContext;
 
+    /**
+     * 初始化
+     * @param args
+     */
     @Override
     public void run(ApplicationArguments args) {
         List<Category> categories = categoryService.list(new QueryWrapper<Category>().eq("status", 0));

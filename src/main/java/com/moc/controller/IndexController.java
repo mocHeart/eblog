@@ -20,7 +20,7 @@ public class IndexController extends BaseController {
         // 1.分页信息  2.分类  3.用户  4.置顶  5.精选  6.排序
         IPage results = postService.paging(page, null, null, null, null, "created");
 
-
+        request.setAttribute("pageData", results);
         request.setAttribute("currentCategoryID", 0);
         return "index";
     }

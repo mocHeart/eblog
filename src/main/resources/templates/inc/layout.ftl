@@ -11,9 +11,18 @@
     <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="/eblog/res/layui/css/layui.css">
     <link rel="stylesheet" href="/eblog/res/css/global.css">
+
+    <script src="/eblog/res/layui/layui.all.js"></script>
+    <script src="/eblog/res/js/jquery.min.js"></script>
+    <script src="/eblog/res/js/sockjs.js"></script>
+    <script src="/eblog/res/js/stomp.js"></script>
+    <script src="/eblog/res/js/im.js"></script>
+    <script src="/eblog/res/js/chat.js"></script>
 </head>
 <body>
 
+<#-- 页码条 -->
+<#include "/inc/common.ftl" />
 <#-- 头部 -->
 <#include "/inc/header.ftl" />
 

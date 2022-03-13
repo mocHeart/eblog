@@ -21,10 +21,10 @@
 </head>
 <body>
 
-<#-- 页码条 -->
-<#include "/inc/common.ftl" />
 <#-- 头部 -->
 <#include "/inc/header.ftl" />
+<#-- 页码条 -->
+<#include "/inc/common.ftl" />
 
 <#-- 中间部分不通用 - 需要单独引入 -->
 <#nested >

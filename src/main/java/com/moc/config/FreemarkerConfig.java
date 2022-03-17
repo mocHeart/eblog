@@ -3,6 +3,7 @@ package com.moc.config;
 import com.moc.template.TimeAgoMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import com.moc.template.PostsTemplate;
 
 import javax.annotation.PostConstruct;
 
@@ -12,6 +13,8 @@ public class FreemarkerConfig {
     @Autowired
     private freemarker.template.Configuration configuration;
 
+    @Autowired
+    private PostsTemplate postsTemplate;
 
     /**
      * PostConstruct注解: 被用来修饰一个非静态的void（）方法
@@ -24,6 +27,7 @@ public class FreemarkerConfig {
     @PostConstruct
     public void setUp() {
         configuration.setSharedVariable("timeAgo", new TimeAgoMethod());
+        configuration.setSharedVariable("posts", postsTemplate);
     }
 
 }

@@ -33,7 +33,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static TemplateHashModel converMap(TemplateModel model) throws TemplateModelException {
+    public static TemplateHashModel convertMap(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateHashModelEx) {
                 return (TemplateHashModelEx) model;
@@ -44,7 +44,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static Integer converInteger(TemplateModel model) throws TemplateModelException {
+    public static Integer convertInteger(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateNumberModel) {
                 return ((TemplateNumberModel) model).getAsNumber().intValue();
@@ -61,7 +61,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static Short converShort(TemplateModel model) throws TemplateModelException {
+    public static Short convertShort(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateNumberModel) {
                 return ((TemplateNumberModel) model).getAsNumber().shortValue();
@@ -78,7 +78,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static Long converLong(TemplateModel model) throws TemplateModelException {
+    public static Long convertLong(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateNumberModel) {
                 return ((TemplateNumberModel) model).getAsNumber().longValue();
@@ -95,7 +95,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static Double converDouble(TemplateModel model) throws TemplateModelException {
+    public static Double convertDouble(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateNumberModel) {
                 return ((TemplateNumberModel) model).getAsNumber().doubleValue();
@@ -112,7 +112,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static String[] converStringArray(TemplateModel model) throws TemplateModelException {
+    public static String[] convertStringArray(TemplateModel model) throws TemplateModelException {
         if (model instanceof TemplateSequenceModel) {
             TemplateSequenceModel smodel = (TemplateSequenceModel) model;
             String[] values = new String[smodel.size()];
@@ -129,7 +129,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static Boolean converBoolean(TemplateModel model) throws TemplateModelException {
+    public static Boolean convertBoolean(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateBooleanModel) {
                 return ((TemplateBooleanModel) model).getAsBoolean();
@@ -145,7 +145,7 @@ public class TemplateModelUtils {
         return null;
     }
 
-    public static Date converDate(TemplateModel model) throws TemplateModelException {
+    public static Date convertDate(TemplateModel model) throws TemplateModelException {
         if (null != model) {
             if (model instanceof TemplateDateModel) {
                 return ((TemplateDateModel) model).getAsDate();

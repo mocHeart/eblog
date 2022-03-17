@@ -55,31 +55,31 @@ public class DirectiveHandler {
     }
 
     public Integer getInteger(String name) throws TemplateModelException {
-        return TemplateModelUtils.converInteger(getModel(name));
+        return TemplateModelUtils.convertInteger(getModel(name));
     }
 
     public Short getShort(String name) throws TemplateModelException {
-        return TemplateModelUtils.converShort(getModel(name));
+        return TemplateModelUtils.convertShort(getModel(name));
     }
 
     public Long getLong(String name) throws TemplateModelException {
-        return TemplateModelUtils.converLong(getModel(name));
+        return TemplateModelUtils.convertLong(getModel(name));
     }
 
     public Double getDouble(String name) throws TemplateModelException {
-        return TemplateModelUtils.converDouble(getModel(name));
+        return TemplateModelUtils.convertDouble(getModel(name));
     }
 
     public String[] getStringArray(String name) throws TemplateModelException {
-        return TemplateModelUtils.converStringArray(getModel(name));
+        return TemplateModelUtils.convertStringArray(getModel(name));
     }
 
     public Boolean getBoolean(String name) throws TemplateModelException {
-        return TemplateModelUtils.converBoolean(getModel(name));
+        return TemplateModelUtils.convertBoolean(getModel(name));
     }
 
     public Date getDate(String name) throws TemplateModelException {
-        return TemplateModelUtils.converDate(getModel(name));
+        return TemplateModelUtils.convertDate(getModel(name));
     }
 
     public String getString(String name, String defaultValue) throws Exception {
@@ -145,15 +145,15 @@ public class DirectiveHandler {
         }
 
         public Integer getInteger(List<TemplateModel> arguments, int index) throws TemplateModelException {
-            return TemplateModelUtils.converInteger(getModel(arguments, index));
+            return TemplateModelUtils.convertInteger(getModel(arguments, index));
         }
 
         public Long getLong(List<TemplateModel> arguments, int index) throws TemplateModelException {
-            return TemplateModelUtils.converLong(getModel(arguments, index));
+            return TemplateModelUtils.convertLong(getModel(arguments, index));
         }
 
         public Date getDate(List<TemplateModel> arguments, int index) throws TemplateModelException {
-            return TemplateModelUtils.converDate(getModel(arguments, index));
+            return TemplateModelUtils.convertDate(getModel(arguments, index));
         }
 
         public TemplateModel getModel(List<TemplateModel> arguments, int index) {

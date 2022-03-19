@@ -7,6 +7,7 @@ import com.moc.entity.Post;
 import com.moc.mapper.PostMapper;
 import com.moc.service.PostService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.moc.vo.PostVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +40,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
                 .orderByDesc(order != null, order);
 
         return postMapper.selectPosts(page, wrapper);
+    }
+
+    @Override
+    public PostVo selectOnePost(QueryWrapper<Post> wrapper) {
+        return postMapper.selectOnePost(wrapper);
     }
 }

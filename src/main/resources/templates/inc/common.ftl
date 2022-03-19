@@ -43,7 +43,7 @@
         </a>
         <h2>
             <a class="layui-badge">${post.categoryName}</a>
-            <a href="/post/${post.id}">${post.title}</a>
+            <a href="/eblog/post/${post.id}">${post.title}</a>
         </h2>
         <div class="fly-list-info">
             <a href="/user/${post.authorId}" link>

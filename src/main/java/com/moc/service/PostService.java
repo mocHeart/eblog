@@ -20,4 +20,9 @@ public interface PostService extends IService<Post> {
     IPage paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String created);
 
     PostVo selectOnePost(QueryWrapper<Post> wrapper);
+
+    /**
+     * 初始化：本周热议
+     */
+    void initWeekRank();
 }

@@ -3,6 +3,7 @@ package com.moc.config;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.moc.entity.Category;
 import com.moc.service.CategoryService;
+import com.moc.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -23,6 +24,9 @@ public class ContextStartUp implements ApplicationRunner, ServletContextAware {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    PostService postService;
+
     /**
      * 凡是实现ServletContextAware接口的类，都可以取得ServletContext
      */
@@ -36,6 +40,9 @@ public class ContextStartUp implements ApplicationRunner, ServletContextAware {
     public void run(ApplicationArguments args) {
         List<Category> categories = categoryService.list(new QueryWrapper<Category>().eq("status", 0));
         servletContext.setAttribute("categories", categories);
+
+        // 初始化热评数据
+        postService.initWeekRank();
     }
 
     @Override

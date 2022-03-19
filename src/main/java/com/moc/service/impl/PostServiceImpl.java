@@ -1,5 +1,8 @@
 package com.moc.service.impl;
 
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,9 +10,14 @@ import com.moc.entity.Post;
 import com.moc.mapper.PostMapper;
 import com.moc.service.PostService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.moc.util.RedisUtil;
 import com.moc.vo.PostVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -24,6 +32,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
     @Autowired
     PostMapper postMapper;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     @Override
     public IPage paging(Page page, Long categoryId, Long userId, Integer level, Boolean recommend, String order) {
@@ -46,4 +57,68 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
     public PostVo selectOnePost(QueryWrapper<Post> wrapper) {
         return postMapper.selectOnePost(wrapper);
     }
+
+    @Override
+    public void initWeekRank() {
+
+        // 获取7天内发表的文章
+        List<Post> posts = list(new QueryWrapper<Post>()
+                .ge("created", DateUtil.offsetDay(new Date(), -7))
+                .select("id, title, user_id, comment_count, view_count, created")
+        );
+
+        // 初始化文章的总评论量
+        for (Post post : posts) {
+            String key = "day:rank:" + DateUtil.format(post.getCreated(), DatePattern.PURE_DATE_FORMAT);
+            redisUtil.zSet(key, post.getId(), post.getCommentCount());
+
+            // 发表7天后自动过期
+            long between = DateUtil.between(new Date(), post.getCreated(), DateUnit.DAY);
+            long expireTime = (7 - between) * 24 * 60 * 60;
+            redisUtil.expire(key, expireTime);
+
+            // 缓存文章的一些基本信息（id，标题，评论数量，作者）
+            hashCachePostIdAndTitle(post, expireTime);
+
+            // 做并集
+            unionAndStoreLast7DayForWeekRank();
+
+        }
+
+
+
+    }
+
+    /**
+     * 缓存文章的基本信息
+     * @param post
+     * @param expireTime
+     */
+    private void hashCachePostIdAndTitle(Post post, long expireTime) {
+        String key = "rank:post" + post.getId();
+        boolean hasKey = redisUtil.hasKey(key);
+        if (!hasKey) {
+            redisUtil.hset(key, "post:id", post.getId(), expireTime);
+            redisUtil.hset(key, "post:title", post.getTitle(), expireTime);
+            redisUtil.hset(key, "post:commentCount", post.getCommentCount(), expireTime);
+        }
+    }
+
+    /**
+     * 本周（近7天）合并每日评论数量
+     */
+    private void unionAndStoreLast7DayForWeekRank() {
+        String  currentKey = "day:rank:" + DateUtil.format(new Date(), DatePattern.PURE_DATE_FORMAT);
+
+        String destKey = "week:rank";
+        List<String> otherKeys = new ArrayList<>();
+        for(int i=-6; i < 0; i++) {
+            String temp = "day:rank:" + DateUtil.format(DateUtil.offsetDay(new Date(), i), DatePattern.PURE_DATE_FORMAT);
+
+            otherKeys.add(temp);
+        }
+
+        redisUtil.zUnionAndStore(currentKey, otherKeys, destKey);
+    }
+
 }

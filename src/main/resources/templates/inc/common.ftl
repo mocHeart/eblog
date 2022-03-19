@@ -1,9 +1,7 @@
 <#--分页-->
 <#macro paging pageData>
-
 <div style="text-align: center">
     <div id="laypage-main">
-
     </div>
     <script>
         console.log("渲染页码条之前")
@@ -36,7 +34,6 @@
 
 
 <#macro plisting post>
-
     <li>
         <a href="/user/${post.authorId}" class="fly-avatar">
             <img src="${post.authorAvatar}" alt="${post.authorName}">
@@ -66,7 +63,6 @@
 
 <#--用户中心的左侧-->
 <#macro centerLeft level>
-
     <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
         <li class="layui-nav-item <#if level == 0> layui-this</#if>">
             <a href="/user/home">

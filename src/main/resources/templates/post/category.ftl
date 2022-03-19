@@ -27,9 +27,16 @@
                         </span>
                     </div>
 
-                    <ul class="fly-list">
+                    <@posts categoryId=currentCategoryId pn=pn size=2>
+                        <ul class="fly-list">
+                            <#list results.records as post>
+                                <@plisting post></@plisting>
+                            </#list>
+                        </ul>
 
-                    </ul>
+                        <#-- 页码条 -->
+                        <@paging results></@paging>
+                    </@posts>
 
                 </div>
             </div>

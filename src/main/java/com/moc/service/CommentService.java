@@ -1,7 +1,10 @@
 package com.moc.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.moc.entity.Comment;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.moc.vo.CommentVo;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface CommentService extends IService<Comment> {
 
+    IPage<CommentVo> paging(Page page, Long postId, Long userId, String oreder);
 }

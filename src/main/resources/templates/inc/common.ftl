@@ -35,7 +35,7 @@
 
 <#macro plisting post>
     <li>
-        <a href="/user/${post.authorId}" class="fly-avatar">
+        <a href="/eblog/user/${post.authorId}" class="fly-avatar">
             <img src="${post.authorAvatar}" alt="${post.authorName}">
         </a>
         <h2>
@@ -43,7 +43,7 @@
             <a href="/eblog/post/${post.id}">${post.title}</a>
         </h2>
         <div class="fly-list-info">
-            <a href="/user/${post.authorId}" link>
+            <a href="/eblog/user/${post.authorId}" link>
                 <cite>${post.authorName}</cite>
             </a>
             <span>${timeAgo(post.created)}</span>

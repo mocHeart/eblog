@@ -79,14 +79,10 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
 
             // 缓存文章的一些基本信息（id，标题，评论数量，作者）
             hashCachePostIdAndTitle(post, expireTime);
-
-            // 做并集
-            unionAndStoreLast7DayForWeekRank();
-
         }
 
-
-
+        // 做并集
+        unionAndStoreLast7DayForWeekRank();
     }
 
     /**
@@ -95,7 +91,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
      * @param expireTime
      */
     private void hashCachePostIdAndTitle(Post post, long expireTime) {
-        String key = "rank:post" + post.getId();
+        String key = "rank:post:" + post.getId();
         boolean hasKey = redisUtil.hasKey(key);
         if (!hasKey) {
             redisUtil.hset(key, "post:id", post.getId(), expireTime);
@@ -114,11 +110,26 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         List<String> otherKeys = new ArrayList<>();
         for(int i=-6; i < 0; i++) {
             String temp = "day:rank:" + DateUtil.format(DateUtil.offsetDay(new Date(), i), DatePattern.PURE_DATE_FORMAT);
-
             otherKeys.add(temp);
         }
-
         redisUtil.zUnionAndStore(currentKey, otherKeys, destKey);
     }
 
+    @Override
+    public void incrCommentCountAndUnionForWeekRank(long postId, boolean isIncr) {
+        String  currentKey = "day:rank:" + DateUtil.format(new Date(), DatePattern.PURE_DATE_FORMAT);
+        redisUtil.zIncrementScore(currentKey, postId, isIncr? 1: -1);
+
+        Post post = this.getById(postId);
+
+        // 发表7天后自动过期
+        long between = DateUtil.between(new Date(), post.getCreated(), DateUnit.DAY);
+        long expireTime = (7 - between) * 24 * 60 * 60; // 有效时间
+
+        // 缓存这篇文章的基本信息
+        this.hashCachePostIdAndTitle(post, expireTime);
+
+        // 重新做并集
+        this.unionAndStoreLast7DayForWeekRank();
+    }
 }

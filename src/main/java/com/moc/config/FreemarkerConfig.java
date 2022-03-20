@@ -1,5 +1,6 @@
 package com.moc.config;
 
+import com.moc.template.HotsTemplate;
 import com.moc.template.TimeAgoMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,9 @@ public class FreemarkerConfig {
     @Autowired
     private PostsTemplate postsTemplate;
 
+    @Autowired
+    private HotsTemplate hotsTemplate;
+
     /**
      * PostConstruct注解: 被用来修饰一个非静态的void（）方法
      *   被@PostConstruct修饰的方法会在服务器加载Servlet的时候运行，并且只会被服务器执行一次
@@ -28,6 +32,7 @@ public class FreemarkerConfig {
     public void setUp() {
         configuration.setSharedVariable("timeAgo", new TimeAgoMethod());
         configuration.setSharedVariable("posts", postsTemplate);
+        configuration.setSharedVariable("hots", hotsTemplate);
     }
 
 }

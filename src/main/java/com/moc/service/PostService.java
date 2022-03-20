@@ -25,4 +25,6 @@ public interface PostService extends IService<Post> {
      * 初始化：本周热议
      */
     void initWeekRank();
+
+    void incrCommentCountAndUnionForWeekRank(long postId, boolean isIncr);
 }

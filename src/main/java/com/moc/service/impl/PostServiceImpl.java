@@ -132,4 +132,22 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         // 重新做并集
         this.unionAndStoreLast7DayForWeekRank();
     }
+
+    @Override
+    public void putViewCount(PostVo vo) {
+        String key = "rank:post:" + vo.getId();
+
+        // 1、从缓存中获取viewCount
+        Integer viewCount = (Integer) redisUtil.hget(key, "post:viewCount");
+
+        // 2、如果没有，就先从实体里面获取，再加一
+        if(viewCount != null) {
+            vo.setViewCount(viewCount + 1);
+        } else {
+            vo.setViewCount(vo.getViewCount() + 1);
+        }
+
+        // 3、同步到缓存里面
+        redisUtil.hset(key, "post:viewCount", vo.getViewCount());
+    }
 }

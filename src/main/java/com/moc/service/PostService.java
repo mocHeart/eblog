@@ -26,5 +26,16 @@ public interface PostService extends IService<Post> {
      */
     void initWeekRank();
 
+    /**
+     * redis缓存文章评论数增减1,并重做本周热议缓存
+     * @param postId
+     * @param isIncr
+     */
     void incrCommentCountAndUnionForWeekRank(long postId, boolean isIncr);
+
+    /**
+     * 阅读量加一
+     * @param vo
+     */
+    void putViewCount(PostVo vo);
 }

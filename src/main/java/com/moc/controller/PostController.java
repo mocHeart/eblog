@@ -36,6 +36,9 @@ public class PostController extends BaseController {
         // 1.分页信息  2.分类  3.用户  4.置顶  5.精选  6.排序
         IPage<CommentVo> results = commentService.paging(getPage(), vo.getId(), null, "created");
 
+        // 阅读量加一
+        postService.putViewCount(vo);
+
         request.setAttribute("currentCategoryId", vo.getCategoryId());
         request.setAttribute("post", vo);
         request.setAttribute("pageData", results);

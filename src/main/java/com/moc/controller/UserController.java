@@ -11,6 +11,8 @@ import com.moc.entity.Post;
 import com.moc.entity.User;
 import com.moc.entity.UserMessage;
 import com.moc.shiro.AccountProfile;
+import com.moc.util.UploadUtil;
+//import com.moc.vo.UserMessageVo;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController extends BaseController {
+
+    @Autowired
+    UploadUtil uploadUtil;
 
     @GetMapping("/user/home")
     public String home() {
@@ -51,7 +60,6 @@ public class UserController extends BaseController {
     public Result doSet(User user) {
 
         if(StrUtil.isNotBlank(user.getAvatar())) {
-
             User temp = userService.getById(getProfileId());
             temp.setAvatar(user.getAvatar());
             userService.updateById(temp);
@@ -60,7 +68,6 @@ public class UserController extends BaseController {
             profile.setAvatar(user.getAvatar());
 
             SecurityUtils.getSubject().getSession().setAttribute("profile", profile);
-
             return Result.success().action("/user/set#avatar");
         }
 
@@ -86,6 +93,54 @@ public class UserController extends BaseController {
         SecurityUtils.getSubject().getSession().setAttribute("profile", profile);
 
         return Result.success().action("/eblog/user/set#info");
+    }
+
+    @ResponseBody
+    @PostMapping("/user/upload")
+    public Result uploadAvatar(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        return uploadUtil.upload(UploadUtil.type_avatar, file);
+    }
+
+    @ResponseBody
+    @PostMapping("/user/repass")
+    public Result repass(String nowpass, String pass, String repass) {
+        if(!pass.equals(repass)) {
+            return Result.fail("两次密码不相同");
+        }
+
+        User user = userService.getById(getProfileId());
+        String nowPassMd5 = SecureUtil.md5(nowpass);
+        if(!nowPassMd5.equals(user.getPassword())) {
+            return Result.fail("密码不正确");
+        }
+
+        user.setPassword(SecureUtil.md5(pass));
+        userService.updateById(user);
+        return Result.success().action("/user/set#info");
+    }
+
+    @GetMapping("/user/index")
+    public String index() {
+        return "/user/index";
+    }
+
+    @ResponseBody
+    @GetMapping("/user/public")
+    public Result userP() {
+        IPage page = postService.page(getPage(), new QueryWrapper<Post>()
+                .eq("user_id", getProfileId())
+                .orderByDesc("created"));
+
+        return Result.success(page);
+    }
+
+    @ResponseBody
+    @GetMapping("/user/collection")
+    public Result collection() {
+        IPage page = postService.page(getPage(), new QueryWrapper<Post>()
+                .inSql("id", "SELECT post_id FROM user_collection where user_id = " + getProfileId())
+        );
+        return Result.success(page);
     }
 
 }

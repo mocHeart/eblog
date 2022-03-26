@@ -76,7 +76,7 @@
                 </div>
 
                 <div class="layui-form layui-form-pane layui-tab-item">
-                    <form action="/user/repass" method="post">
+                    <form action="/eblog/user/repass" method="post">
                         <div class="layui-form-item">
                             <label for="L_nowpass" class="layui-form-label">当前密码</label>
                             <div class="layui-input-inline">

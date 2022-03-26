@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/eblog/res/css/global.css">
 
 <#--    <script src="/eblog/res/layui/layui.all.js"></script>-->
+    <script src="/eblog/res/layui/layui.js"></script>
     <script src="/eblog/res/js/jquery.min.js"></script>
     <script src="/eblog/res/js/sockjs.js"></script>
     <script src="/eblog/res/js/stomp.js"></script>
@@ -32,18 +33,18 @@
 <#-- 尾部 -->
 <#include "/inc/footer.ftl" />
 
-<script src="/eblog/res/layui/layui.js"></script>
 <script>
     layui.cache.user = {
-        username: '游客'
-        ,uid: -1
-        ,avatar: '/eblog/res/images/avatar/00.jpg'
-        ,experience: 83
-        ,sex: '男'
+        username: '游客',
+        uid: -1,
+        avatar: '/eblog/res/images/avatar/00.jpg',
+        experience: 83,
+        sex: '男'
     };
     layui.config({
-        version: "3.0.0"
-        ,base: '/eblog/res/mods/' //这里实际使用时，建议改成绝对路径
+        version: "3.0.0",
+        // 这里实际使用时，建议改成绝对路径
+        base: '/eblog/res/mods/'
     }).extend({
         fly: 'index'
     }).use('fly');

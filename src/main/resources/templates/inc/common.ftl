@@ -4,12 +4,8 @@
     <div id="laypage-main">
     </div>
     <script>
-        console.log("渲染页码条之前")
         layui.use('laypage', function(){
             var laypage = layui.laypage;
-
-            console.log("页码111")
-
             //执行一个laypage实例
             laypage.render({
                 elem: 'laypage-main'
@@ -17,11 +13,9 @@
                 ,curr: ${pageData.current}
                 ,limit: ${pageData.size}
                 ,jump: function(obj, first){
-                    console.log("页码222")
                     //首次不执行
                     if(!first){
                         location.href = "?pn=" + obj.curr;
-                        console.log("页码333")
                         console.log(location.href)
                     }
                 }

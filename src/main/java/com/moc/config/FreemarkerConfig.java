@@ -1,5 +1,6 @@
 package com.moc.config;
 
+import com.jagregory.shiro.freemarker.ShiroTags;
 import com.moc.template.HotsTemplate;
 import com.moc.template.TimeAgoMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class FreemarkerConfig {
         configuration.setSharedVariable("timeAgo", new TimeAgoMethod());
         configuration.setSharedVariable("posts", postsTemplate);
         configuration.setSharedVariable("hots", hotsTemplate);
+        configuration.setSharedVariable("shiro", new ShiroTags());
     }
 
 }

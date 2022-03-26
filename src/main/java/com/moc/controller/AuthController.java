@@ -73,7 +73,7 @@ public class AuthController extends BaseController {
                 return Result.fail("用户认证失败");
             }
         }
-        return Result.success().action("/");
+        return Result.success().action("/eblog/");
     }
 
     @GetMapping("/register")

@@ -3,6 +3,7 @@ package com.moc.service;
 import com.moc.common.lang.Result;
 import com.moc.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.moc.shiro.AccountProfile;
 
 /**
  * <p>
@@ -15,4 +16,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     Result register(User user);
+
+    AccountProfile login(String email, String password);
 }

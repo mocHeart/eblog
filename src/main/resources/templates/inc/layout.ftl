@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/eblog/res/layui/css/layui.css">
     <link rel="stylesheet" href="/eblog/res/css/global.css">
 
-    <script src="/eblog/res/layui/layui.all.js"></script>
+<#--    <script src="/eblog/res/layui/layui.all.js"></script>-->
     <script src="/eblog/res/js/jquery.min.js"></script>
     <script src="/eblog/res/js/sockjs.js"></script>
     <script src="/eblog/res/js/stomp.js"></script>

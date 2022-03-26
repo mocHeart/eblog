@@ -550,12 +550,15 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function(
         if(res.action){
           location.href = res.action;
         }
-        if(button.attr('reload')) {
-            location.reload();
-        }
+
         // else {
         //   fly.form[action||button.attr('key')](data.field, data.form);
         // }
+
+        // 和当前页相同的href则重新刷新页面
+        if(button.attr('reload')) {
+          location.reload();
+        }
       };
       if(res.status == 0){
         button.attr('alert') ? layer.alert(res.msg, {

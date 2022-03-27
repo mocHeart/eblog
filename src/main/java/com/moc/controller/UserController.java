@@ -1,5 +1,6 @@
 package com.moc.controller;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -10,7 +11,6 @@ import com.moc.entity.User;
 import com.moc.entity.UserMessage;
 import com.moc.shiro.AccountProfile;
 import com.moc.util.UploadUtil;
-//import com.moc.vo.UserMessageVo;
 import com.moc.vo.UserMessageVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserController extends BaseController {
@@ -62,6 +63,7 @@ public class UserController extends BaseController {
             AccountProfile profile = getProfile();
             profile.setAvatar(user.getAvatar());
 
+            // 修改session中的用户信息
             SecurityUtils.getSubject().getSession().setAttribute("profile", profile);
             return Result.success().action("/user/set#avatar");
         }
@@ -85,6 +87,8 @@ public class UserController extends BaseController {
         AccountProfile profile = getProfile();
         profile.setUsername(temp.getUsername());
         profile.setSign(temp.getSign());
+
+        // 修改session中的用户信息
         SecurityUtils.getSubject().getSession().setAttribute("profile", profile);
 
         return Result.success().action("/eblog/user/set#info");
@@ -184,6 +188,17 @@ public class UserController extends BaseController {
                 .eq(!all, "id", id));
 
         return remove ? Result.success(null) : Result.fail("删除失败");
+    }
+
+    @ResponseBody
+    @RequestMapping("/message/nums/")
+    public Map msgNums() {
+        int count = messageService.count(new QueryWrapper<UserMessage>()
+                .eq("to_user_id", getProfileId())
+                .eq("status", "0")
+        );
+        return MapUtil.builder("status", 0)
+                .put("count", count).build();
     }
 
 }

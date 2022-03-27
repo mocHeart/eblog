@@ -1,7 +1,5 @@
 package com.moc.controller;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,19 +11,16 @@ import com.moc.entity.UserMessage;
 import com.moc.shiro.AccountProfile;
 import com.moc.util.UploadUtil;
 //import com.moc.vo.UserMessageVo;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.moc.vo.UserMessageVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController extends BaseController {
@@ -101,6 +96,10 @@ public class UserController extends BaseController {
         return uploadUtil.upload(UploadUtil.type_avatar, file);
     }
 
+    /**
+     * 基本设置 - 用户中心 - 我收藏的贴
+     * @return 1
+     */
     @ResponseBody
     @PostMapping("/user/repass")
     public Result repass(String nowpass, String pass, String repass) {
@@ -124,9 +123,13 @@ public class UserController extends BaseController {
         return "/user/index";
     }
 
+    /**
+     * 基本设置 - 用户中心 - 我发表的贴
+     * @return 1
+     */
     @ResponseBody
     @GetMapping("/user/public")
-    public Result userP() {
+    public Result userPublic() {
         IPage page = postService.page(getPage(), new QueryWrapper<Post>()
                 .eq("user_id", getProfileId())
                 .orderByDesc("created"));
@@ -134,6 +137,10 @@ public class UserController extends BaseController {
         return Result.success(page);
     }
 
+    /**
+     * 基本设置 - 用户中心 - 我收藏的贴
+     * @return 1
+     */
     @ResponseBody
     @GetMapping("/user/collection")
     public Result collection() {
@@ -141,6 +148,42 @@ public class UserController extends BaseController {
                 .inSql("id", "SELECT post_id FROM user_collection where user_id = " + getProfileId())
         );
         return Result.success(page);
+    }
+    /**
+     * 基本设置 - 用户中心 - 我的消息
+     * @return 1
+     */
+    @GetMapping("/user/mess")
+    public String mess() {
+
+        IPage<UserMessageVo> page = messageService.paging(getPage(), new QueryWrapper<UserMessage>()
+                .eq("to_user_id", getProfileId())
+                .orderByDesc("created")
+        );
+
+        // 把消息改成已读状态
+        List<Long> ids = new ArrayList<>();
+        for(UserMessageVo messageVo : page.getRecords()) {
+            if(messageVo.getStatus() == 0) {
+                ids.add(messageVo.getId());
+            }
+        }
+        // 批量修改成已读
+        messageService.updateToRead(ids);
+
+        request.setAttribute("pageData", page);
+        return "/user/mess";
+    }
+
+    @ResponseBody
+    @PostMapping("/message/remove/")
+    public Result msgRemove(Long id, @RequestParam(defaultValue = "false") Boolean all) {
+
+        boolean remove = messageService.remove(new QueryWrapper<UserMessage>()
+                .eq("to_user_id", getProfileId())
+                .eq(!all, "id", id));
+
+        return remove ? Result.success(null) : Result.fail("删除失败");
     }
 
 }

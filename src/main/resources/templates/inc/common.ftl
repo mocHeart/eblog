@@ -21,7 +21,6 @@
                 }
             });
         });
-        console.log("渲染页码条之后")
     </script>
 </div>
 </#macro>

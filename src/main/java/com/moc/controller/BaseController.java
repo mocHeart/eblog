@@ -1,10 +1,7 @@
 package com.moc.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.moc.service.CommentService;
-import com.moc.service.PostService;
-import com.moc.service.UserMessageService;
-import com.moc.service.UserService;
+import com.moc.service.*;
 import com.moc.shiro.AccountProfile;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,9 @@ public class BaseController {
 
     @Autowired
     UserMessageService messageService;
+
+    @Autowired
+    UserCollectionService collectionService;
 
     public Page getPage() {
         int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);

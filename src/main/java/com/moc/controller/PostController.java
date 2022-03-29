@@ -7,9 +7,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.moc.common.lang.Result;
 import com.moc.entity.Post;
 import com.moc.entity.UserCollection;
+import com.moc.util.ValidationUtil;
 import com.moc.vo.CommentVo;
 import com.moc.vo.PostVo;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -116,5 +118,56 @@ public class PostController extends BaseController {
 
         return Result.success();
     }
+
+    @GetMapping("/post/edit")
+    public String edit(){
+        String id = request.getParameter("id");
+        if(!StringUtils.isEmpty(id)) {
+            Post post = postService.getById(id);
+            Assert.isTrue(post != null, "改帖子已被删除");
+            Assert.isTrue(post.getUserId().longValue() == getProfileId().longValue(), "没权限操作此文章");
+            request.setAttribute("post", post);
+        }
+        request.setAttribute("categories", categoryService.list());
+        return "/post/edit";
+    }
+
+    @ResponseBody
+    @PostMapping("/post/submit")
+    public Result submit(Post post) {
+        ValidationUtil.ValidResult validResult = ValidationUtil.validateBean(post);
+        if(validResult.hasErrors()) {
+            return Result.fail(validResult.getErrors());
+        }
+
+        if(post.getId() == null) {
+            post.setUserId(getProfileId());
+            post.setModified(new Date());
+            post.setCreated(new Date());
+            post.setCommentCount(0);
+            post.setEditMode(null);
+            post.setLevel(0);
+            post.setRecommend(false);
+            post.setViewCount(0);
+            post.setVoteDown(0);
+            post.setVoteUp(0);
+            postService.save(post);
+        } else {
+            Post tempPost = postService.getById(post.getId());
+            Assert.isTrue(tempPost.getUserId().longValue() == getProfileId().longValue(), "无权限编辑此文章！");
+
+            tempPost.setTitle(post.getTitle());
+            tempPost.setContent(post.getContent());
+            tempPost.setCategoryId(post.getCategoryId());
+            postService.updateById(tempPost);
+        }
+
+//        // 通知消息给mq，告知更新或添加
+//        amqpTemplate.convertAndSend(RabbitConfig.es_exchage, RabbitConfig.es_bind_key,
+//                new PostMqIndexMessage(post.getId(), PostMqIndexMessage.CREATE_OR_UPDATE));
+
+        return Result.success().action("/eblog/post/" + post.getId());
+    }
+
 
 }

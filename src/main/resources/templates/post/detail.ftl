@@ -45,7 +45,7 @@
                             <span>${timeAgo(post.created)}</span>
                         </div>
                         <div class="detail-hits" id="LAY_jieAdmin" data-id="${post.id}">
-                            <span class="layui-btn layui-btn-xs jie-admin" type="edit"><a href="add.html">编辑此贴</a></span>
+                            <span class="layui-btn layui-btn-xs jie-admin" type="edit"><a href="/post/edit?id=${post.id}">编辑此贴</a></span>
                         </div>
                     </div>
                     <div class="detail-body photos">
@@ -128,6 +128,17 @@
 
     <script>
         layui.cache.page = 'jie';
+
+        // 使用模板自定义的编辑器时，解析表情包等内容
+        $(function () {
+            layui.use(['fly', 'face'], function() {
+                var fly = layui.fly;
+                $('.detail-body').each(function(){
+                    var othis = $(this), html = othis.html();
+                    othis.html(fly.content(html));
+                });
+            });
+        });
     </script>
 
 </@layout>

@@ -76,11 +76,11 @@ layui.define('fly', function(exports){
     del: function(div){
       layer.confirm('确认删除该求解么？', function(index){
         layer.close(index);
-        fly.json('/post/delete/', {
+        fly.json('/eblog/post/delete/', {
           id: div.data('id')
         }, function(res){
           if(res.status === 0){
-            location.href = '/user/index/';
+            location.href = '/eblog/user/index/';
           } else {
             layer.msg(res.msg);
           }
@@ -91,7 +91,7 @@ layui.define('fly', function(exports){
     //设置置顶、状态
     ,set: function(div){
       var othis = $(this);
-      fly.json('/admin/jie-set/', {
+      fly.json('/eblog/admin/jie-set/', {
         id: div.data('id')
         ,rank: othis.attr('rank')
         ,field: othis.attr('field')

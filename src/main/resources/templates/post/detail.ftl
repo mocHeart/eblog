@@ -21,13 +21,20 @@
                         <#if post.recommend><span class="layui-badge layui-bg-red">精帖</span></#if>
 
                         <div class="fly-admin-box" data-id="${post.id}">
-                            <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>
 
-                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span>
-                            <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span> -->
+                            <#-- 发布者才能删除 -->
+                            <#if post.userId == profile.id>
+                                <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>
+                            </#if>
 
-                            <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span>
-                            <!-- <span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span> -->
+                            <#--管理员操作-->
+                            <@shiro.hasRole name="admin">
+                                <span class="layui-btn layui-btn-xs jie-admin" type="set" field="delete" rank="1">删除</span>
+                                <#if post.level == 0><span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="1">置顶</span></#if>
+                                <#if post.level gt 0><span class="layui-btn layui-btn-xs jie-admin" type="set" field="stick" rank="0" style="background-color:#ccc;">取消置顶</span></#if>
+                                <#if !post.recommend><span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="1">加精</span></#if>
+                                <#if post.recommend><span class="layui-btn layui-btn-xs jie-admin" type="set" field="status" rank="0" style="background-color:#ccc;">取消加精</span></#if>
+                            </@shiro.hasRole>
                         </div>
                         <span class="fly-list-nums">
                             <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> ${post.commentCount}</a>

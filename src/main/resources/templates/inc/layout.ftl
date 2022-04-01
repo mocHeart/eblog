@@ -51,6 +51,41 @@
     }).use('fly');
 </script>
 
+<script>
+    function showTips(count) {
+        var msg = $('<a class="fly-nav-msg" href="javascript:;">'+ count +'</a>');
+        var elemUser = $('.fly-nav-user');
+        elemUser.append(msg);
+        msg.on('click', function(){
+            location.href = "/eblog/user/mess";
+        });
+        layer.tips('你有 '+ count +' 条未读消息', msg, {
+            tips: 3
+            ,tipsMore: true
+            ,fixed: true
+        });
+        msg.on('mouseenter', function(){
+            layer.closeAll('tips');
+        })
+    }
+
+    $(function () {
+        var elemUser = $('.fly-nav-user');
+        if(layui.cache.user.uid !== -1 && elemUser[0]){
+            var socket = new SockJS("/eblog/websocket")
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function (frame) {
+                stompClient.subscribe("/user/" + ${profile.id} + "/messCount", function (res) {
+                    console.log(res);
+                    // 弹窗
+                    showTips(res.body);
+                })
+            });
+
+        }
+    });
+</script>
+
 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
 
 </body>

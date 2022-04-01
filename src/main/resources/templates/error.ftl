@@ -10,4 +10,4 @@
         </div>
     </div>
 </div>
-</@layout></@layout>
+</@layout>

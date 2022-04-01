@@ -34,6 +34,9 @@ public class BaseController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    WsService wsService;
+
     public Page getPage() {
         int pn = ServletRequestUtils.getIntParameter(request, "pn", 1);
         int size = ServletRequestUtils.getIntParameter(request, "size", 2);

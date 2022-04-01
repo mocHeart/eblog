@@ -71,11 +71,11 @@
                                 <a name="item-${comment.id}"></a>
                                 <div class="detail-about detail-about-reply">
                                     <a class="fly-avatar" href="/eblog/user/${post.authorId}">
-                                        <img src="${post.authorAvatar}" alt="${post.authorName}">
+                                        <img src="${comment.authorAvatar}" alt="${comment.authorName}">
                                     </a>
                                     <div class="fly-detail-user">
-                                        <a href="/eblog/user/${post.authorId}" class="fly-link">
-                                            <cite>${post.authorName}</cite>
+                                        <a href="/eblog/user/${comment.authorId}" class="fly-link">
+                                            <cite>${comment.authorName}</cite>
                                         </a>
 
                                         <#if comment.userId == post.userId><span>(楼主)</span></#if>
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
                                 <div class="detail-body jieda-body photos">
-                                    <p>${comment.content}</p>
+                                    ${comment.content}
                                 </div>
                                 <div class="jieda-reply">
                                     <span class="jieda-zan zanok" type="zan">
@@ -98,7 +98,7 @@
                                         回复
                                     </span>
                                     <div class="jieda-admin">
-                                        <span type="edit">编辑</span>
+<#--                                        <span type="edit">编辑</span>-->
                                         <span type="del">删除</span>
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@
                     </ul>
 
                     <div class="layui-form layui-form-pane">
-                        <form action="/jie/reply/" method="post">
+                        <form action="/eblog/post/reply/" method="post">
                             <div class="layui-form-item layui-form-text">
                                 <a name="comment"></a>
                                 <div class="layui-input-block">

@@ -10,7 +10,7 @@ tio.ws = function ($, layim) {
     var self = this;
 
     this.connect = function () {
-        var url = "ws://129.204.23.53:9326?userId=" + self.userId;
+        var url = "ws://127.0.0.1:9326?userId=" + self.userId;
         var socket = new WebSocket(url);
 
         self.socket = socket;
@@ -48,7 +48,7 @@ tio.ws = function ($, layim) {
 
         // 获取个人信息
         $.ajax({
-            url: "/chat/getMineAndGroupData",
+            url: "/eblog/chat/getMineAndGroupData",
             async: false,
             success: function (res) {
                 self.group = res.data.group;

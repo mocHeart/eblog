@@ -1,0 +1,21 @@
+server:
+  servlet:
+    context-path: /eblog
+  port: 8088
+
+spring:
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.55.0.87:3306/vueblog?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: swwljy
+
+  # Redis配置
+  redis:
+    host: 106.55.0.87
+    port: 6379
+    password: foobared
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**Mapper.xml

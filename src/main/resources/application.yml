@@ -12,22 +12,9 @@ spring:
     username: root
     password: swwljy
 
-  # 模板配置
-  freemarker:
-    settings:
-      classic_compatible: true   # 处理空值
-      datetime_format: yyyy-MM-dd HH:mm
-      number_format: 0.##
-
   # Redis配置
   redis:
     host: 106.55.0.87
     port: 6379
     password: foobared
 
-mybatis-plus:
-  mapper-locations: classpath*:/mapper/**Mapper.xml
-
-file:
-  upload:
-    dir: ${user.dir}/upload

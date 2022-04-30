@@ -1,5 +1,6 @@
 package com.moc.controller;
 
+import com.moc.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +14,9 @@ public class IndexController {
     HttpServletRequest request;
 
     @RequestMapping("/")
-    public String index() {
+    public Result index() {
         System.out.println(request.getRequestURL());
-        return request.getRequestURL() + "：欢迎您！";
+        return Result.success(request.getRequestURL() + "：欢迎您！");
     }
 
 }

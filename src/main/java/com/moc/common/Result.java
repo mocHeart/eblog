@@ -43,4 +43,11 @@ public class Result {
         return result;
     }
 
+    public static Result fail(int code, String message, Object data) {
+        Result result = new Result();
+        result.setCode(String.valueOf(code));
+        result.setData(data);
+        result.setMsg(message);
+        return result;
+    }
 }

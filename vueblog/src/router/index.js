@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import Login from '../views/Login.vue'
+import Blogs from '../views/Blogs.vue'
+import BlogEdit from '../views/BlogEdit.vue'
+import BlogDetail from '../views/BlogDetail.vue'
 
 const routes = [
   {
@@ -10,10 +14,38 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import('../views/AboutView.vue')
+  },
+  {
+    path: '/blogs',
+    name: 'Blogs',
+    component: Blogs
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/blog/add',
+    name: 'BlogAdd',
+    component: BlogEdit,
+    meta: {
+      requireAuth: true
+    }
+  },
+  {
+    path: '/blog/:blogId',
+    name: 'BlogDetail',
+    component: BlogDetail
+  },
+  {
+    path: '/blog/:blogId/edit',
+    name: 'BlogEdit',
+    component: BlogEdit,
+    meta: {
+      requireAuth: true
+    }
   }
 ]
 

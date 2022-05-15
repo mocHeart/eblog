@@ -8,17 +8,12 @@
     <router-link to="/blog/1">BlogDetail</router-link> |
     <router-link to="/blog/1/edit">BlogEdit</router-link> |
   </nav>
+
+  <hr>
   <router-view/>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
 nav {
   padding: 30px;

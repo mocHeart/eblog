@@ -1,8 +1,5 @@
 <template>
     <div>
-        <Header>Login</Header>
-        <p>This is Login.vue</p>
-
         <el-container>
             <el-header>
                 <img class="mlogo" src="https://www.markerhub.com/dist/images/logo/markerhub-logo.png" alt="">
@@ -21,10 +18,8 @@
                         <el-button @click="resetForm('ruleForm')">重置</el-button>
                     </el-form-item>
                 </el-form>
-
             </el-main>
         </el-container>
-
     </div>
 </template>
 
@@ -37,10 +32,9 @@
                     username: 'moc',
                     password: '123'
                 },
-                // blur: 失去焦点
-                // change: 数据改变
                 rules: {
                     username: [
+                        // trigger 触发校验的时机：blur 失去焦点  change 数据改变
                         { required: true, message: '请输入用户名', trigger: 'blur' },
                         { min: 3, max: 15, message: '长度在 3 到 15 个字符', trigger: 'blur' }
                     ],
@@ -48,27 +42,28 @@
                         { required: true, message: '请选择密码', trigger: 'change' }
                     ]
                 }
-            };
+            }
         },
         methods: {
             submitForm(formName) {
+                /* 这里的 $refs 为什么可以写成这种数组的方式？ */
+                /* 和普通节点上绑定ref不同，这里是被Element封装后挂到this.refs上的 */
+                // console.log(this.$refs[formName])
+
+                /* validate 对整个表单的内容进行校验进行验证，valid: true (成功)，false(失败) */
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        const _this = this
-                        this.$axios.post('/login', this.ruleForm).then(res => {
-
-                            console.log(res.data)
+                        console.log(this.ruleForm)
+                        this.axios.post('http://127.0.0.1:8088/eblog/login', this.ruleForm).then((res) => {
+                            console.log(res)
                             const jwt = res.headers['authorization']
                             const userInfo = res.data.data
 
-                            // 把数据共享出去
-                            _this.$store.commit("SET_TOKEN", jwt)
-                            _this.$store.commit("SET_USERINFO", userInfo)
+                            // 登录信息存储
+                            this.$store.commit("SET_TOKEN", jwt)
+                            this.$store.commit("SET_USERINFO", userInfo)
 
-                            // 获取
-                            console.log(_this.$store.getters.getUser)
-
-                            _this.$router.push("/blogs")
+                            this.$router.push("/blogs")
                         })
 
                     } else {

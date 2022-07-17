@@ -15,7 +15,7 @@ axios.interceptors.request.use(config => {
 
 // axios 后置拦截
 axios.interceptors.response.use(response => {
-    console.log(response)
+    // console.log(response)
     if (response.status === 200) {
         return response
     } else {

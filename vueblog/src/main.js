@@ -19,6 +19,8 @@ import './axios.js'
 // 导入vue3-markdown-it
 import Markdown from 'vue3-markdown-it';
 
+import './permission.js'
+
 const app = createApp(App)
 
 app.use(store)

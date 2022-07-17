@@ -64,7 +64,6 @@ export default {
             }
           }).then(res => {
             console.log(res)
-            console.log(this.$alert)
             this.$alert('操作成功', '提示', {
               confirmButtonText: '确定',
               callback: action => {

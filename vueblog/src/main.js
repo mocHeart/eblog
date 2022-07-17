@@ -16,6 +16,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import './axios.js'
 
+// 导入vue3-markdown-it
+import Markdown from 'vue3-markdown-it';
+
 const app = createApp(App)
 
 app.use(store)
@@ -23,6 +26,7 @@ app.use(store)
     .use(ElementPlus)
     .use(mavonEditor)
     .use(VueAxios, axios)
+    .use(Markdown)
     .mount('#app')
 
 

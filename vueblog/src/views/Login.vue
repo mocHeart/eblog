@@ -53,19 +53,22 @@
                 /* validate 对整个表单的内容进行校验进行验证，valid: true (成功)，false(失败) */
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        console.log(this.ruleForm)
-                        this.axios.post('http://127.0.0.1:8088/eblog/login', this.ruleForm).then((res) => {
-                            console.log(res)
-                            const jwt = res.headers['authorization']
-                            const userInfo = res.data.data
+                        // console.log(this.ruleForm)
+                        this.axios.post('http://127.0.0.1:8088/eblog/login', this.ruleForm)
+                            .then(res => {
+                                console.log(res)
+                                const jwt = res.headers['authorization']
+                                const userInfo = res.data.data
 
-                            // 登录信息存储
-                            this.$store.commit("SET_TOKEN", jwt)
-                            this.$store.commit("SET_USERINFO", userInfo)
+                                // 登录信息存储
+                                this.$store.commit("SET_TOKEN", jwt)
+                                this.$store.commit("SET_USERINFO", userInfo)
 
-                            this.$router.push("/blogs")
-                        })
-
+                                this.$router.push("/blogs")
+                            })
+                            .catch(error => {
+                                console.log('axios: ', error)
+                            })
                     } else {
                         console.log('error submit!!');
                         return false;

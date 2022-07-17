@@ -10,6 +10,7 @@ import 'element-plus/dist/index.css'
 // 导入axios
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import './axios.js'
 
 const app = createApp(App)
 
